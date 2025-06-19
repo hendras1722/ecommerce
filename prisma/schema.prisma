@@ -44,6 +44,7 @@ model InvoiceProduct {
   invoiceId  String
   productId  String
   name_customer String
+  total String
 
   invoice    Invoice  @relation(fields: [invoiceId], references: [id])
   product    Product  @relation(fields: [productId], references: [id])

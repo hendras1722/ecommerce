@@ -20,4 +20,5 @@ export interface ListProduct {
     id: string;
     name_category: string;
   };
+  total?: number
 }

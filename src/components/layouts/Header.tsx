@@ -15,10 +15,7 @@ export default function Header() {
       className="border-b border-slate-200"
       shadow={'sm'}
     >
-      <div className="font-bold">Ekomerzeee</div>
-      <div>
-        <Button>Click me</Button>
-      </div>
+      <div className="font-bold">ecommerce</div>
     </Flex>
   )
 }

@@ -9,7 +9,7 @@ import Product from '@/components/pages/Product'
 import { BaseReponseAPI, Meta } from '@/type/BaseReponseAPI'
 import { Category } from '@/type/Category'
 import { ListProduct, PayloadProduct } from '@/type/Product'
-import { Button, Grid, GridItem } from '@chakra-ui/react'
+import { Button, Flex, Grid, GridItem, Skeleton } from '@chakra-ui/react'
 import { useEffect, useState } from 'react'
 
 export default function Home() {
@@ -50,11 +50,15 @@ export default function Home() {
     name_customer: '',
   })
 
+  const [loading, setLoading] = useState(false)
+
   async function getData() {
+    setLoading(true)
     const data = await fetch(
       `/api/product?page=${meta.page}&limit=10&name_product=${payloadFilter.name_product}&category_id=${payloadFilter.category_id}`
     )
     const posts = await data.json()
+    setLoading(false)
     setMeta(posts.meta)
     setProducts(posts.data)
   }
@@ -138,36 +142,63 @@ export default function Home() {
   }, [open])
   return (
     <BaseContainer>
-      <FilterModule
-        setPayload={setPayload}
-        payload={payload}
-        actionCreate={CreateProduct}
-        setOpen={setOpen}
-        itemsCategory={category}
-        open={open}
-        setPayloadFilter={setPayloadFilter}
-        payloadFilter={payloadFilter}
-      />
-      <Grid templateColumns="repeat(3, 1fr)" gap={4}>
-        <ArrayMap
-          of={products}
-          render={(item, index) => (
-            <GridItem key={index} rowSpan={2}>
-              <Product
-                item={item}
-                actionDelete={actionDelete}
-                openDelete={openDelete}
-                setOpenDelete={setOpenDelete}
-                actionUpdateProductModal={actionUpdate}
-                itemsCategory={category}
-                setPayload={setPayload}
-                openProductModal={openProductModal}
-                setOpenProductModal={setOpenProductModal}
-                setInvoice={setInvoice}
-              />
-            </GridItem>
-          )}
+      {loading && (
+        <Flex
+          gap={3}
+          alignItems={'center'}
+          justify={'space-between'}
+          marginBottom={'20px'}
+        >
+          <Flex gap={3} alignItems={'center'}>
+            <Skeleton height="40px" width={'140px'} marginTop={'30px'} />
+            <Skeleton height="40px" width={'140px'} marginTop={'30px'} />
+          </Flex>
+          <Skeleton height="40px" width={'40px'} marginTop={'30px'} />
+        </Flex>
+      )}
+      {!loading && (
+        <FilterModule
+          setPayload={setPayload}
+          payload={payload}
+          actionCreate={CreateProduct}
+          setOpen={setOpen}
+          itemsCategory={category}
+          open={open}
+          setPayloadFilter={setPayloadFilter}
+          payloadFilter={payloadFilter}
         />
+      )}
+
+      <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+        {loading && (
+          <>
+            <Skeleton height="150px" width={'full'} marginTop={'30px'} />
+            <Skeleton height="150px" width={'full'} marginTop={'30px'} />{' '}
+            <Skeleton height="150px" width={'full'} marginTop={'30px'} />
+          </>
+        )}
+
+        {!loading && (
+          <ArrayMap
+            of={products}
+            render={(item, index) => (
+              <GridItem key={index} rowSpan={2}>
+                <Product
+                  item={item}
+                  actionDelete={actionDelete}
+                  openDelete={openDelete}
+                  setOpenDelete={setOpenDelete}
+                  actionUpdateProductModal={actionUpdate}
+                  itemsCategory={category}
+                  setPayload={setPayload}
+                  openProductModal={openProductModal}
+                  setOpenProductModal={setOpenProductModal}
+                  setInvoice={setInvoice}
+                />
+              </GridItem>
+            )}
+          />
+        )}
       </Grid>
       <div className="flex justify-center fixed bottom-5 right-2/4 left-[40%] transform -translate-x-1/2 -translate-y-1/2">
         <BasePagination
@@ -180,13 +211,14 @@ export default function Home() {
       </div>
       {invoice.products.length > 0 && (
         <Button
-          background={'#FF6F61'}
+          background={'blue.600'}
+          _hover={{ bg: 'blue.700' }}
           onClick={() => setOpenInvoice(!openInvoice)}
           color="white"
           padding={'10px'}
           className="absolute bottom-6 left-24"
         >
-          Invoice
+          Checkout
         </Button>
       )}
 
