@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Invoice {
+   id         String   @id @default(uuid()) @map("_id")
+  created_at      DateTime         @default(now())
+  invoiceProducts InvoiceProduct[]
+
+  @@map("invoice")
+}
+
+model Product {
+   id         String   @id @default(uuid()) @map("_id")
+  name_product    String
+  category_id     String
+  stock           String
+  description     String
+  price           String
+  softDeleted     Boolean          @default(false)
+  created_at      DateTime         @default(now())
+  updated_at      DateTime         @updatedAt
+
+  category Category @relation("category", fields: [category_id], references: [id], onDelete: Cascade)
+  invoiceProducts InvoiceProduct[]
+
+  @@map("product")
+}
+
+model InvoiceProduct {
+  id         String   @id @default(uuid()) @map("_id")
+  invoiceId  String
+  productId  String
+  name_customer String
+
+  invoice    Invoice  @relation(fields: [invoiceId], references: [id])
+  product    Product  @relation(fields: [productId], references: [id])
+
+  @@unique([invoiceId, productId])
+}
+
+model Category {
+   id         String   @id @default(uuid()) @map("_id")
+  name_category String
+
+  created_at  DateTime @default(now())
+  updated_at  DateTime @default(now())
+
+  product Product[] @relation("category")
+  @@map("category")
+}
