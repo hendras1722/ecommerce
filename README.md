@@ -1,36 +1,74 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🛒 Next.js 15 E-commerce App
 
-## Getting Started
+Ini adalah proyek e-commerce sederhana yang dibangun dengan **Next.js versi 15**, menggunakan **Chakra UI** sebagai UI framework dan **MongoDB** sebagai database.
 
-First, run the development server:
+## 🚀 Fitur Utama
+
+* ✅ UI menggunakan Chakra UI
+* 🛒 Manajemen produk dan keranjang belanja
+* 🌐 Routing App Router Next.js 15
+* 📦 MongoDB untuk penyimpanan data
+
+---
+
+## 🧑‍💻 Tech Stack
+
+| Tech          | Keterangan                        |
+| ------------- | --------------------------------- |
+| **Next.js**   | Versi 15 dengan App Router        |
+| **Chakra UI** | UI components responsif dan mudah |
+| **MongoDB**   | Database NoSQL yang digunakan     |
+| **Node.js**   | Minimum versi **20.x**            |
+
+---
+
+## 📦 Instalasi
+
+### 1. **Clone repositori**
+
+```bash
+git clone https://github.com/hendras1722/ecommerce.git
+cd ecommerce
+```
+
+### 2. **Install dependencies**
+
+> Pastikan kamu menggunakan **Node.js v20 atau lebih tinggi**.
+
+```bash
+npm install
+# atau jika pakai yarn
+# yarn install
+```
+
+### 3. **Buat file environment**
+
+Buat file `.env.local` di root folder dan isi seperti berikut:
+
+```env
+DATABASE_URL=mongodb+srv://<username>:<password>@cluster0.mongodb.net/<dbName>?retryWrites=true&w=majority
+```
+
+> Ganti `DATABASE_URL` dengan string MongoDB Atlas atau lokal kamu.
+
+---
+
+## 🏃‍♂️ Menjalankan Aplikasi
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Aplikasi akan berjalan di:
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+```
+http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+---
 
-## Learn More
+## 📬 Kontak
 
-To learn more about Next.js, take a look at the following resources:
+Proyek oleh [@hendras1722](https://github.com/hendras1722)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+---
