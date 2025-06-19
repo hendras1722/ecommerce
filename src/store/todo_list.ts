@@ -8,7 +8,6 @@ export const useStore = create<Store>((set) => ({
   count: 1,
   inc: (evt: string) =>
     set((state: { count: number }) => {
-      console.log(evt, 'inivet')
       if (evt === 'plus') {
         return { count: state.count + 1 }
       } else {

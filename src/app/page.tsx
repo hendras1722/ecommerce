@@ -96,7 +96,6 @@ export default function Home() {
       method: 'DELETE',
     })
     if (response.ok) {
-      console.log('Product deleted successfully')
       setOpenDelete(false)
       getData()
     } else {

@@ -15,7 +15,6 @@ export async function GET(request: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const res = await request.formData()
-    console.log(res)
     return NextResponse.json(JSON.stringify({ data: 'data' }), { status: 200 })
   } catch (error: unknown) {
     if (error instanceof Error) {

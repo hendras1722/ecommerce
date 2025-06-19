@@ -1,13 +1,41 @@
 import prisma from "@/utils/prisma";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(request: Request) {
-  const body = await request.json();
+export async function GET(request: NextRequest) {
+  try {
+    const data = await prisma.invoice.findMany({
+      include: {
+        invoiceProducts: {
+          include: {
+            product: true,
+          },
+        },
+      },
+    })
+    return NextResponse.json(
+      {
+        data: data,
+        message: 'success',
+      },
+      { status: 200 }
+    )
+  } catch (error) {
+    console.error(error)
+    return NextResponse.json(
+      { message: 'Internal Server Error' },
+      { status: 500 }
+    )
+  }
+}   
+
+export async function POST(request: NextRequest) {
+  const body = await request.json()
   const { name_customer, products, invoiceId } = body
 
   if (!name_customer || !products || products.length === 0) {
     return new Response(JSON.stringify({ error: 'Invalid input' }), {
       status: 400,
-    });
+    })
   }
 
   const data = prisma.invoice.create({
@@ -20,29 +48,11 @@ export async function POST(request: Request) {
     },
   })
 
-  return new Response(JSON.stringify(data), { status: 200 });
-  // try {
-  //   const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/invoice`, {
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       name_customer,
-  //       products,
-  //       invoiceId,
-  //     }),
-  //   })
-
-  //   if (!response.ok) {
-  //     throw new Error('Failed to create invoice');
-  //   }
-
-  //   const data = await response.json();
-  //   return new Response(JSON.stringify(data), { status: 200 });
-  // } catch (error) {
-  //   return new Response(JSON.stringify({ error: error.message }), {
-  //     status: 500,
-  //   });
-  // }
+  return NextResponse.json(
+    {
+      data: data,
+      message: 'success',
+    },
+    { status: 200 }
+  )
 }
