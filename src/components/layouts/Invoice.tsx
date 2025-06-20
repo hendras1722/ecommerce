@@ -144,7 +144,11 @@ export default function Invoice({
           </div>
           <div>Diskon</div>
           <Flex gap={2} className="mt-2">
-            <BaseInput type="number"  onOpenChange={(e: React.ChangeEvent<HTMLInputElement>) => ()} /> <span>%</span>
+            <BaseInput
+              type="number"
+              onOpenChange={(e: React.ChangeEvent<HTMLInputElement>) => {}}
+            />{' '}
+            <span>%</span>
           </Flex>
           <div>
             <Button
