@@ -1,7 +1,7 @@
-import prisma from "@/utils/prisma";
-import { NextRequest, NextResponse } from "next/server";
+import prisma from '@/utils/prisma'
+import { NextRequest, NextResponse } from 'next/server'
 
-export  async function GET(
+export async function GET(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
 ) {
@@ -12,31 +12,27 @@ export  async function GET(
     const page = parseInt(searchParams.get('page') ?? '1', 10)
     const limit = parseInt(searchParams.get('limit') ?? '10', 10)
 
-    if (slug.slug) {
-      const [data, total] = await Promise.all([
-        prisma.category.findUnique({
-          where: {
-            id: slug.slug ?? '',
-          },
-        }),
-        prisma.category.count(),
-      ])
-      return NextResponse.json(
-        {
-          data: data ?? {},
-          message: 'success',
-          meta: {
-            total,
-            page,
-            limit,
-            totalPages: Math.ceil(total / limit),
-          },
+    const [data, total] = await Promise.all([
+      prisma.category.findUnique({
+        where: {
+          id: slug.slug ?? '',
         },
-        { status: 200 }
-      )
-    } else {
-      throw new Error('slug not found')
-    }
+      }),
+      prisma.category.count(),
+    ])
+    return NextResponse.json(
+      {
+        data: data ?? {},
+        message: 'success',
+        meta: {
+          total,
+          page,
+          limit,
+          totalPages: Math.ceil(total / limit),
+        },
+      },
+      { status: 200 }
+    )
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
@@ -93,7 +89,6 @@ export async function PUT(
   }
 }
 
-
 export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ slug: string }> }
@@ -121,7 +116,10 @@ export async function DELETE(
       where: { id: slug },
     })
 
-    return NextResponse.json({ message: 'Category deleted successfully' }, { status: 200 })
+    return NextResponse.json(
+      { message: 'Category deleted successfully' },
+      { status: 200 }
+    )
   } catch (error) {
     if (error instanceof Error) {
       return NextResponse.json(
